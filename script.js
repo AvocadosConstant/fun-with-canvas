@@ -1,30 +1,38 @@
-function outlineShape(ctx, pts) {
+function outlinePoly(ctx, pts) {
   ctx.beginPath();
   ctx.moveTo(pts[0].x ,pts[0].y);
-  for(i = 0; i < pts.length; i++) {
+  for(var i = 0; i < pts.length; i++) {
     ctx.lineTo(pts[(i+1)%pts.length].x, pts[(i+1)%pts.length].y);
   }
   ctx.stroke();
 }
 
-function nestShape(pts, factor) {
+function nestPoly(pts, factor) {
   nestPts = [];
-  for(i = 0; i < pts.length; i++) {
+  for(var i = 0; i < pts.length; i++) {
     a = pts[i];
     b = pts[(i+1)%pts.length];
     dx = b.x - a.x;
     dy = b.y - a.y;
     dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    xOffset = factor*dx/dist;
-    yOffset = factor*dy/dist;
-    nestPts.push({x: a.x + xOffset, y: a.y + yOffset});
+
+    // For the offsets:
+    // if denominator is
+    //   100: factor specifies a percentage
+    //   dist:factor specifies an exact px distance
+    xOffset = factor*dx/100; 
+    yOffset = factor*dy/100;
+    nestPts.push({
+      x: a.x + xOffset, 
+      y: a.y + yOffset
+    });
   }
   return nestPts;
 }
 
-function generatePts(num, minX, maxX, minY, maxY) {
+function generateChaoticPts(numVerts, minX, maxX, minY, maxY) {
   var pts = []; 
-  for(i = 0; i < num; i++) {
+  for(var i = 0; i < numVerts; i++) {
     pts.push({
       x: Math.random() * (maxX - minX) + minX, 
       y: Math.random() * (maxY - minY) + minY 
@@ -34,33 +42,36 @@ function generatePts(num, minX, maxX, minY, maxY) {
 }
 
 function drawNestedConstruction(pts) {
-  for(iter = 0; iter < 24; iter++) {
-    outlineShape(ctx, pts);
-    pts = nestShape(pts, 12);
+  for(var i = 0; i < 64; i++) {
+    outlinePoly(ctx, pts);
+    pts = nestPoly(pts, 4);
   }
 }
-
-
 
 
 var CANVAS = {
   id: "canvas",
   width: 800, 
   height: 600,
-  border: 10
+  border: 10,
+  color: "#fafcdc"
 };
 
 var canvas = document.getElementById(CANVAS.id);
 var ctx = canvas.getContext("2d");
 
 //  draw canvas
-ctx.fillStyle = "#fafcdc";
+ctx.fillStyle = CANVAS.color;
 ctx.fillRect(0, 0, CANVAS.width, CANVAS.height);
 
-drawNestedConstruction(
-    generatePts(
-      32, 
-      CANVAS.border, CANVAS.width - CANVAS.border, 
-      CANVAS.border, CANVAS.height - CANVAS.border
-    )
-);
+var NUM_SHAPES = 1;
+var NUM_SIDES = 32;
+for(var i = 0; i < NUM_SHAPES; i++) {
+  drawNestedConstruction(
+      generateChaoticPts(
+        NUM_SIDES, 
+        CANVAS.border, CANVAS.width - CANVAS.border, 
+        CANVAS.border, CANVAS.height - CANVAS.border
+      )
+  );
+}
