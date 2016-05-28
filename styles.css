@@ -1,0 +1,14 @@
+body {
+  height: 100%;
+  margin: 0 0;
+  text-align: center; 
+  font-family: sans-serif; 
+  background: #1a1a1a; 
+  color: #e0f1f5;
+}
+
+.container {
+  margin: 0 0;
+  padding: 40px 20% 40px 20%;
+  max-height: inherit;
+}
