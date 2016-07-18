@@ -41,16 +41,15 @@ function generateChaoticPts(numVerts, minX, maxX, minY, maxY) {
   return pts;
 }
 
-function drawNestedConstruction(pts) {
+function drawNestedConstruction(ctx, pts) {
   for(var i = 0; i < 64; i++) {
     outlinePoly(ctx, pts);
     pts = nestPoly(pts, 4);
   }
 }
 
-
 var CANVAS = {
-  id: "canvas",
+  id: "polyCanvas",
   width: 800, 
   height: 600,
   border: 10,
@@ -64,10 +63,11 @@ var ctx = canvas.getContext("2d");
 ctx.fillStyle = CANVAS.color;
 ctx.fillRect(0, 0, CANVAS.width, CANVAS.height);
 
-var NUM_SHAPES = 1;
-var NUM_SIDES = 32;
+var NUM_SHAPES = 4;
+var NUM_SIDES = 12;
 for(var i = 0; i < NUM_SHAPES; i++) {
   drawNestedConstruction(
+      ctx,
       generateChaoticPts(
         NUM_SIDES, 
         CANVAS.border, CANVAS.width - CANVAS.border, 

@@ -12,3 +12,7 @@ body {
   padding: 40px 20% 40px 20%;
   max-height: inherit;
 }
+
+canvas {
+  margin-bottom: 20px;
+}
