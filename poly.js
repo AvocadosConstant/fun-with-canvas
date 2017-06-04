@@ -48,30 +48,15 @@ function drawNestedConstruction(ctx, pts) {
   }
 }
 
-var CANVAS = {
-  id: "polyCanvas",
-  width: 800, 
-  height: 600,
-  border: 10,
-  color: "#fafcdc"
-};
-
-var canvas = document.getElementById(CANVAS.id);
-var ctx = canvas.getContext("2d");
-
-//  draw canvas
-ctx.fillStyle = CANVAS.color;
-ctx.fillRect(0, 0, CANVAS.width, CANVAS.height);
-
-var NUM_SHAPES = 4;
-var NUM_SIDES = 12;
-for(var i = 0; i < NUM_SHAPES; i++) {
-  drawNestedConstruction(
-      ctx,
-      generateChaoticPts(
-        NUM_SIDES, 
-        CANVAS.border, CANVAS.width - CANVAS.border, 
-        CANVAS.border, CANVAS.height - CANVAS.border
-      )
-  );
+function drawConstructions(ctx, POLY_CANVAS, NUM_SHAPES, NUM_SIDES) {
+  for(var i = 0; i < NUM_SHAPES; i++) {
+    drawNestedConstruction(
+        ctx,
+        generateChaoticPts(
+          NUM_SIDES, 
+          POLY_CANVAS.border, POLY_CANVAS.width - POLY_CANVAS.border, 
+          POLY_CANVAS.border, POLY_CANVAS.height - POLY_CANVAS.border
+        )
+    );
+  }
 }

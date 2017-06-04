@@ -15,14 +15,6 @@ var ant = {
   dir: 0    // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
 };
 
-var CANVAS = {
-  id: "antCanvas",
-  width: 800, 
-  height: 600,
-  border: 10,
-  color: "#fafcdc"
-};
-
 function shiftPos(turn) {
   //console.log("Ant is at (" + ant.x + ", " + ant.y + ") and is turning " + turn);
   ant.dir = (ant.dir + turn + 4) % 4;
@@ -42,7 +34,7 @@ function shiftPos(turn) {
   //console.log("Ant is now at (" + ant.x + ", " + ant.y + ") and is facing " + ant.dir);
 }
 
-function updateAnt(times) {
+function updateAnt(ctx) {
   var pos = ant.x + "-" + ant.y;
   //console.log(pos);
   ant.prevX = ant.x; 
@@ -71,12 +63,3 @@ function updateAnt(times) {
   //console.log(blackCells);
   //console.log("There are " + Object.keys(blackCells).length + " black cells!");
 }
-
-var canvas = document.getElementById(CANVAS.id);
-var ctx = canvas.getContext("2d");
-
-//  draw canvas
-ctx.fillStyle = CANVAS.color;
-ctx.fillRect(0, 0, CANVAS.width, CANVAS.height);
-
-var gameTimer = setInterval(updateAnt, 1);
