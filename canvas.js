@@ -48,10 +48,11 @@ function draw() {
   }, 1);
 
   var walkCtx = initContext(WALK_CANVAS);
-  var particle = createParticle(5);
-  //var walkTimer = setInterval( function(){
+  var particle = createParticle(2);
+  printParticle(particle);
+  var walkTimer = setInterval( function(){
     walk(walkCtx, particle);
-  //}, 1000);
+  }, 3000);
 
 }
 
