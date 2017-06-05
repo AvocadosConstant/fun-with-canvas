@@ -49,12 +49,43 @@ function updateParticle(p) {
   }
 };
 
+function traceParticle(ctx, origPos, newPos) {
+  ctx.beginPath();
+  // Generalize for all dims
+  var xOff = 400;
+  var yOff = 300;
+
+  var oldX = Math.floor(xOff + 10*origPos[0]);
+  var oldY = Math.floor(yOff + 10*origPos[1]);
+
+  var newX = Math.floor(xOff + 10*newPos[0]);
+  var newY = Math.floor(yOff + 10*newPos[1]);
+
+  ctx.moveTo(oldX, oldY);
+  ctx.lineTo(newX, newY);
+  ctx.stroke();
+}
+
 function walk(ctx, particle) {
+  var origPos = particle.pos.slice();
   var dir = getDirVec(particle.pos, particle.focus, true);
   // "Gravity" towards the focal point
   particle.acc = dir;
+
+  // Some tangential acceleration
+  /*
+  particle.acc[0] += -dir[1]/randInt(10, 30);
+  particle.acc[1] += dir[0]/randInt(10, 30);
+  var mag = getMagnitude(particle.acc);
+  if(mag > 0) {
+    particle.acc[0] /= mag;
+    particle.acc[1] /= mag;
+  }
+  */
+
   updateParticle(particle);
   printParticle(particle);
+  traceParticle(ctx, origPos, particle.pos);
 }
 
 function printParticle(p) {

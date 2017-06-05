@@ -19,8 +19,7 @@ var WALK_CANVAS = {
   width: 800, 
   height: 600,
   border: 10,
-  //color: "#fafcdc"
-  color: "#000000"
+  color: "#fafcdc"
 };
 
 /**
