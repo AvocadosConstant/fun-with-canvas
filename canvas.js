@@ -52,8 +52,7 @@ function draw() {
   printParticle(particle);
   var walkTimer = setInterval( function(){
     walk(walkCtx, particle);
-  }, 3000);
-
+  }, 100);
 }
 
 draw();
