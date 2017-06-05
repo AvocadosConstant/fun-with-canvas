@@ -42,8 +42,9 @@ function draw() {
   drawConstructions(polyCtx, POLY_CANVAS, NUM_SHAPES, NUM_SIDES);
 
   var antCtx = initContext(ANT_CANVAS);
+  var ant = createAnt();
   var gameTimer = setInterval( function(){
-    updateAnt(antCtx);
+    updateAnt(antCtx, ant);
   }, 1);
 
   var walkCtx = initContext(WALK_CANVAS);

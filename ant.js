@@ -5,18 +5,19 @@ var BLACK = "#444";
 var WHITE = "#eee";
 var RED   = "#f44";
 
-var blackCells = {};
+function createAnt() {
+  var ant = {
+    prevX: -1,
+    prevY: -1,
+    x: 40,
+    y: 30,
+    dir: 0,    // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
+    blackCells: {}
+  };
+  return ant;
+}
 
-var ant = {
-  prevX: -1,
-  prevY: -1,
-  x: 40,
-  y: 30,
-  dir: 0    // NORTH = 0, EAST = 1, SOUTH = 2, WEST = 3
-};
-
-function shiftPos(turn) {
-  //console.log("Ant is at (" + ant.x + ", " + ant.y + ") and is turning " + turn);
+function shiftPos(ant, turn) {
   ant.dir = (ant.dir + turn + 4) % 4;
   switch(ant.dir) {
     case 0:
@@ -31,35 +32,30 @@ function shiftPos(turn) {
       console.log("Something went wrong in function shiftPos!");
       break;
   }
-  //console.log("Ant is now at (" + ant.x + ", " + ant.y + ") and is facing " + ant.dir);
 }
 
-function updateAnt(ctx) {
+function updateAnt(ctx, ant) {
   var pos = ant.x + "-" + ant.y;
-  //console.log(pos);
   ant.prevX = ant.x; 
   ant.prevY = ant.y; 
 
-  if(pos in blackCells) {   // pos is black 
-    delete blackCells[pos]; // remove pos from blackCells
+  if(pos in ant.blackCells) {   // pos is black 
+    delete ant.blackCells[pos]; // remove pos from ant.blackCells
     ctx.fillStyle = WHITE; // make pos white
     ctx.fillRect(ant.x * 10, ant.y * 10, 10, 10);
-    shiftPos(LEFT);         // make ant turn left
+    shiftPos(ant, LEFT);         // make ant turn left
   }
   else {                    // pos is white
-    blackCells[pos] = true; // add pos to blackCells
+    ant.blackCells[pos] = true; // add pos to ant.blackCells
     ctx.fillStyle = BLACK; //make pos black
     ctx.fillRect(ant.x * 10, ant.y * 10, 10, 10);
-    shiftPos(RIGHT);        // make ant turn right
+    shiftPos(ant, RIGHT);        // make ant turn right
   }
 
   ctx.fillStyle = RED; 
   ctx.fillRect(ant.x * 10 + 1, ant.y * 10 + 1, 8, 8);
 
-  if((ant.prevX + "-" + ant.prevY) in blackCells) ctx.fillStyle = BLACK;
+  if((ant.prevX + "-" + ant.prevY) in ant.blackCells) ctx.fillStyle = BLACK;
   else ctx.fillStyle = WHITE;
   ctx.fillRect(ant.prevX * 10, ant.prevY * 10, 10, 10);
-
-  //console.log(blackCells);
-  //console.log("There are " + Object.keys(blackCells).length + " black cells!");
 }
