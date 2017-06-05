@@ -43,11 +43,16 @@ function draw() {
 
   var antCtx = initContext(ANT_CANVAS);
   var ant = createAnt();
-  var gameTimer = setInterval( function(){
+  var antTimer = setInterval( function(){
     updateAnt(antCtx, ant);
   }, 1);
 
   var walkCtx = initContext(WALK_CANVAS);
+  var particle = createParticle(5);
+  //var walkTimer = setInterval( function(){
+    walk(walkCtx, particle);
+  //}, 1000);
+
 }
 
 draw();
