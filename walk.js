@@ -37,7 +37,7 @@ function createParticle(numDims) {
     pos: Array(numDims).fill(0),
     vel: Array.from(
       {length: numDims},
-      () => randInt(-5, 5)),
+      () => randInt(-10, 10)/1),
     acc: Array(numDims).fill(0)
   };
 }
@@ -54,12 +54,13 @@ function traceParticle(ctx, origPos, newPos) {
   // Generalize for all dims
   var xOff = 400;
   var yOff = 300;
+  var scale = 1;
 
-  var oldX = Math.floor(xOff + 10*origPos[0]);
-  var oldY = Math.floor(yOff + 10*origPos[1]);
+  var oldX = Math.floor(xOff + scale * origPos[0]);
+  var oldY = Math.floor(yOff + scale * origPos[1]);
 
-  var newX = Math.floor(xOff + 10*newPos[0]);
-  var newY = Math.floor(yOff + 10*newPos[1]);
+  var newX = Math.floor(xOff + scale * newPos[0]);
+  var newY = Math.floor(yOff + scale * newPos[1]);
 
   ctx.moveTo(oldX, oldY);
   ctx.lineTo(newX, newY);
@@ -82,6 +83,8 @@ function walk(ctx, particle) {
     particle.acc[1] /= mag;
   }
   */
+  particle.acc[0] += randInt(-30, 30)/(Math.sqrt(30*30*30));
+  particle.acc[1] += randInt(-30, 30)/(Math.sqrt(30*30*30));
 
   updateParticle(particle);
   printParticle(particle);
